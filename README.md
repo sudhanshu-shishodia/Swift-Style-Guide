@@ -71,7 +71,38 @@ UIApplication.shared.open(url)
 // Log data
 ```
 
+### 2. Properties ###
 
+* Use `let` over `var` if property is read-only and use lazy initialization wherever possible.
+
+
+_Not Preferred_
+
+```
+var apiKeyConstant = "asdqwe123"
+
+// Instantiates everytime
+var locationManager = makeLocationManager()
+
+```
+
+_Preferred_
+
+```
+// Constant
+let apiKeyConstant = "asdqwe123"
+
+// Instantiates when required
+lazy var locationManager = makeLocationManager()
+
+private func makeLocationManager() -> CLLocationManager {
+  let manager = CLLocationManager()
+  manager.desiredAccuracy = kCLLocationAccuracyBest
+  manager.delegate = self
+  manager.requestAlwaysAuthorization()
+  return manager
+}
+```
 
 
 
