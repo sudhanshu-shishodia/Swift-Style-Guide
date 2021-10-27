@@ -174,3 +174,49 @@ default:
     print("Not Applicable")
 }
 ```
+
+### 4. Closures ###
+
+* Use shorthand argument syntax for simple one-line closure implementations
+
+_Not Preferred_
+
+```
+func transform(action: (String) -> String) {
+}
+
+transform { (input: String) -> String in
+    return input.reverse()
+}
+```
+
+_Preferred_
+
+```
+func transform(action: (String) -> String) {
+}
+
+transform { $0.reverse() }
+```
+
+* Use capture lists to resolve strong reference cycles in closures. We typically want [weak self] here to avoid the strong capturing of self inside the block, as it is less likely to lead to retain cycles that cause memory leaks
+
+_Not Preferred_
+
+```
+UserAPI.registerUser(user) { result in
+    if result.success {
+        self.doSomethingWithResult(result)
+    }
+}
+```
+
+_Preferred_
+
+```
+UserAPI.registerUser(user) { [weak self] result in
+    if result.success {
+        self?.doSomethingWithResult(result)
+    }
+}
+```
