@@ -104,5 +104,73 @@ private func makeLocationManager() -> CLLocationManager {
 }
 ```
 
+### 3. Switch ###
+
+* Use multiple values in a single case wherever applicable.
+
+_Not Preferred_
+
+```
+switch someCharacter {
+case "a":
+    print("\(someCharacter) is a vowel")
+case "e":
+    print("\(someCharacter) is a vowel")
+case "i":
+    print("\(someCharacter) is a vowel")
+case "o":
+    print("\(someCharacter) is a vowel")
+case "u":
+    print("\(someCharacter) is a vowel")
+default:
+    print("\(someCharacter) is not a vowel")
+}
+```
+
+_Preferred_
+
+```
+switch someCharacter {
+case "a", "e", "i", "o", "u":
+    print("\(someCharacter) is a vowel")
+default:
+    print("\(someCharacter) is not a vowel")
+}
+```
 
 
+* break is not needed between statements, cases do not fallthrough by default
+
+_Not Preferred_
+
+```
+switch someCountryEnum {
+case .india:
+    print("New Delhi")
+    break
+case .usa:
+    print("Washington DC")
+    break
+case .china:
+    print("Beijing")
+    break
+default:
+    print("Not Applicable")
+    break
+}
+```
+
+_Preferred_
+
+```
+switch someCountryEnum {
+case .india:
+    print("New Delhi")
+case .usa:
+    print("Washington DC")
+case .china:
+    print("Beijing")
+default:
+    print("Not Applicable")
+}
+```
