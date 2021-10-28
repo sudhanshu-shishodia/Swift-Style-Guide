@@ -1,4 +1,4 @@
-# Swift-Style-Guide
+# iOS-Coding-Conventions
 
 ## Goals ##
 
