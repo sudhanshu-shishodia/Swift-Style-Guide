@@ -217,7 +217,7 @@ UserAPI.registerUser(user) { [weak self] result in
 }
 ```
 
-### 4. Protocols ###
+### 5. Protocols ###
 
 * When adding protocol conformance to a class, prefer adding a separate class extension for the protocol methods.
 
@@ -278,3 +278,71 @@ class SomeTableCell: UITableViewCell {
     weak var delegate: SomeTableCellDelegate?
 }
 ```
+
+### 6. Higher order functions and loops ###
+
+* Use higher order functions like `map()`, `reduce()`, `filter()`, `flatmap()`, etc instead of writing same operation yourself.
+
+_Not Preferred_
+
+```
+let evenNumbers = []
+let allNumbers = [1,2,3,4,5,6]
+for number in allNumbers {
+    if number % 2 == 0 {
+        allNumbers.append(number)
+    }
+}
+print(evenNumbers)
+```
+
+_Preferred_
+
+```
+let allNumbers = [1,2,3,4,5,6]
+let evenNumbers = allNumbers.filter { $0 % 2 == 0 }
+print(evenNumbers)
+```
+
+* Use the `enumerated()` function if you need to loop over a Sequence and use both index and element in the loop.
+
+_Not Preferred_
+
+```
+for index in 0..<someArray.count {
+    print(index)
+    print(someArray[index])
+}
+```
+
+_Preferred_
+
+```
+for (index, element) in someArray.enumerated() {
+    print(index)
+    print(element)
+}
+```
+
+* When the entirety of a for loop’s body would be a single if block testing a condition of the element, the test is placed in the where clause of the for statement instead.
+
+_Not Preferred_
+
+```
+for item in collection {
+  if item.hasProperty {
+    // ...
+  }
+}
+```
+
+_Preferred_
+
+```
+for item in collection where item.hasProperty {
+  // ...
+}
+```
+
+
+
