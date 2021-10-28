@@ -344,5 +344,39 @@ for item in collection where item.hasProperty {
 }
 ```
 
+### 7. Patterns ###
 
+* Extract complex property observers into methods
 
+_Not Preferred_
+
+```
+class TextField {
+  var text: String? {
+    didSet {
+      guard oldValue != text else {
+        return
+      }
+      // Do a bunch of operations (API, analytics)
+    }
+  }
+}
+```
+
+_Preferred_
+
+```
+class TextField {
+  var text: String? {
+    didSet { textDidUpdate(from: oldValue) }
+  }
+
+  private func textDidUpdate(from oldValue: String?) {
+    guard oldValue != text else {
+      return
+    }
+    // Do a bunch of operations (API, analytics)
+    // All in meaningful methods
+  }
+}
+```
