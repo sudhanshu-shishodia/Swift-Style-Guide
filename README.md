@@ -2,11 +2,7 @@
 
 ## Goals ##
 
-Following this style guide should:
-
-* Make it easier to read and begin understanding unfamiliar code.
-* Make code easier to maintain.
-* Reduce simple programmer errors.
+The document enlist code snippets focusing on common mistakes and their suggested solution.
 
 ### 1. Optionals ###
 
@@ -218,5 +214,67 @@ UserAPI.registerUser(user) { [weak self] result in
     if result.success {
         self?.doSomethingWithResult(result)
     }
+}
+```
+
+### 4. Protocols ###
+
+* When adding protocol conformance to a class, prefer adding a separate class extension for the protocol methods.
+
+_Not Preferred_
+
+```
+class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDelegate {
+  // class stuff here
+  // table view data source methods here
+  // scroll view delegate methods here
+}
+```
+
+_Preferred_
+
+```
+class MyViewcontroller: UIViewController {
+  // class stuff here
+}
+
+// MARK: - UITableViewDataSource
+extension MyViewcontroller: UITableViewDataSource {
+  // table view data source methods here
+}
+
+// MARK: - UIScrollViewDelegate
+extension MyViewcontroller: UIScrollViewDelegate {
+  // scroll view delegate methods here
+}
+```
+
+* Use weak optional vars for delegate variables to avoid retain cycles
+
+_Not Preferred_
+
+```
+//SomeTableCell.swift
+
+protocol SomeTableCellDelegate: class {
+    func cellButtonWasTapped(cell: SomeTableCell)
+}
+
+class SomeTableCell: UITableViewCell {
+    var delegate: SomeTableCellDelegate? // Creates retain cycle
+}
+```
+
+_Preferred_
+
+```
+//SomeTableCell.swift
+
+protocol SomeTableCellDelegate: class {
+    func cellButtonWasTapped(cell: SomeTableCell)
+}
+
+class SomeTableCell: UITableViewCell {
+    weak var delegate: SomeTableCellDelegate?
 }
 ```
