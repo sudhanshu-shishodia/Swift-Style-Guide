@@ -1,6 +1,6 @@
 # iOS-Coding-Conventions
 
-## Goals ##
+## Goal ##
 
 The document enlist code snippets focusing on common mistakes and their suggested solution.
 
@@ -8,14 +8,14 @@ The document enlist code snippets focusing on common mistakes and their suggeste
 
 * The only time you should be using implicitly unwrapped optionals is with @IBOutlets. In every other case, it is better to use a non-optional or regular optional property. Yes, there are cases in which you can probably "guarantee" that the property will never be nil when used, but it is better to be safe and consistent. Similarly, don't use force unwraps (`!`, `as!`, `try!`, etc)
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 let name: String!
 let number = text as! Int
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 let name: String?
@@ -24,7 +24,7 @@ let number = text as? Int
 
 * When unwrapping optionals, `if let` is better suited for situations where you still need to move forward after failing. For other cases, use `guard let` to improve readability by focusing on the happy-path and can also reduce nesting by keeping your code flatter.
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 if let id = json[Constants.id] as? Int {
@@ -47,7 +47,7 @@ if let url = URL(string: string) {
 }
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 if
@@ -72,7 +72,7 @@ UIApplication.shared.open(url)
 * Use `let` over `var` if property is read-only and use lazy initialization wherever possible.
 
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 var apiKeyConstant = "asdqwe123"
@@ -82,7 +82,7 @@ var locationManager = makeLocationManager()
 
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 // Constant
@@ -104,7 +104,7 @@ private func makeLocationManager() -> CLLocationManager {
 
 * Use multiple values in a single case wherever applicable.
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 switch someCharacter {
@@ -123,7 +123,7 @@ default:
 }
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 switch someCharacter {
@@ -137,7 +137,7 @@ default:
 
 * break is not needed between statements, cases do not fallthrough by default
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 switch someCountryEnum {
@@ -156,7 +156,7 @@ default:
 }
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 switch someCountryEnum {
@@ -175,7 +175,7 @@ default:
 
 * Use shorthand argument syntax for simple one-line closure implementations
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 func transform(action: (String) -> String) {
@@ -186,7 +186,7 @@ transform { (input: String) -> String in
 }
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 func transform(action: (String) -> String) {
@@ -197,7 +197,7 @@ transform { $0.reverse() }
 
 * Use capture lists to resolve strong reference cycles in closures. We typically want [weak self] here to avoid the strong capturing of self inside the block, as it is less likely to lead to retain cycles that cause memory leaks
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 UserAPI.registerUser(user) { result in
@@ -207,7 +207,7 @@ UserAPI.registerUser(user) { result in
 }
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 UserAPI.registerUser(user) { [weak self] result in
@@ -221,7 +221,7 @@ UserAPI.registerUser(user) { [weak self] result in
 
 * When adding protocol conformance to a class, prefer adding a separate class extension for the protocol methods.
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDelegate {
@@ -231,7 +231,7 @@ class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDel
 }
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 class MyViewcontroller: UIViewController {
@@ -251,7 +251,7 @@ extension MyViewcontroller: UIScrollViewDelegate {
 
 * Use weak optional vars for delegate variables to avoid retain cycles
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 //SomeTableCell.swift
@@ -265,7 +265,7 @@ class SomeTableCell: UITableViewCell {
 }
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 //SomeTableCell.swift
@@ -283,7 +283,7 @@ class SomeTableCell: UITableViewCell {
 
 * Use higher order functions like `map()`, `reduce()`, `filter()`, `flatmap()`, etc instead of writing same operation yourself.
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 let evenNumbers = []
@@ -296,7 +296,7 @@ for number in allNumbers {
 print(evenNumbers)
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 let allNumbers = [1,2,3,4,5,6]
@@ -306,7 +306,7 @@ print(evenNumbers)
 
 * Use the `enumerated()` function if you need to loop over a Sequence and use both index and element in the loop.
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 for index in 0..<someArray.count {
@@ -315,7 +315,7 @@ for index in 0..<someArray.count {
 }
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 for (index, element) in someArray.enumerated() {
@@ -326,7 +326,7 @@ for (index, element) in someArray.enumerated() {
 
 * When the entirety of a for loop’s body would be a single if block testing a condition of the element, the test is placed in the where clause of the for statement instead.
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 for item in collection {
@@ -336,7 +336,7 @@ for item in collection {
 }
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 for item in collection where item.hasProperty {
@@ -348,7 +348,7 @@ for item in collection where item.hasProperty {
 
 * Extract complex property observers into methods
 
-_Not Preferred_
+__Not Preferred__
 
 ```
 class TextField {
@@ -363,7 +363,7 @@ class TextField {
 }
 ```
 
-_Preferred_
+__Preferred__
 
 ```
 class TextField {
