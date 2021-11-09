@@ -6,7 +6,7 @@ The document enlist code snippets focusing on common mistakes and their suggeste
 
 ### 1. Optionals ###
 
-* The only time you should be using implicitly unwrapped optionals is with @IBOutlets. In every other case, it is better to use a non-optional or regular optional property. Yes, there are cases in which you can probably "guarantee" that the property will never be nil when used, but it is better to be safe and consistent. Similarly, don't use force unwraps (`!`, `as!`, `try!`, etc)
+* It is better to use a non-optional or regular optional property, except when using @IBOutlets. Don't use force unwraps (`!`, `as!`, `try!`, etc)
 
 __Not Preferred__
 
@@ -21,7 +21,7 @@ __Preferred__
 let name: String?
 let number = text as? Int
 ```
-
+---
 * When unwrapping optionals, `if let` is better suited for situations where you still need to move forward after failing. For other cases, use `guard let` to improve readability by focusing on the happy-path and can also reduce nesting by keeping your code flatter.
 
 __Not Preferred__
@@ -134,7 +134,7 @@ default:
 }
 ```
 
-
+---
 * break is not needed between statements, cases do not fallthrough by default
 
 __Not Preferred__
@@ -194,7 +194,7 @@ func transform(action: (String) -> String) {
 
 transform { $0.reverse() }
 ```
-
+---
 * Use capture lists to resolve strong reference cycles in closures. We typically want [weak self] here to avoid the strong capturing of self inside the block, as it is less likely to lead to retain cycles that cause memory leaks
 
 __Not Preferred__
@@ -248,7 +248,7 @@ extension MyViewcontroller: UIScrollViewDelegate {
   // scroll view delegate methods here
 }
 ```
-
+---
 * Use weak optional vars for delegate variables to avoid retain cycles
 
 __Not Preferred__
@@ -303,7 +303,7 @@ let allNumbers = [1,2,3,4,5,6]
 let evenNumbers = allNumbers.filter { $0 % 2 == 0 }
 print(evenNumbers)
 ```
-
+---
 * Use the `enumerated()` function if you need to loop over a Sequence and use both index and element in the loop.
 
 __Not Preferred__
@@ -323,7 +323,7 @@ for (index, element) in someArray.enumerated() {
     print(element)
 }
 ```
-
+---
 * When the entirety of a for loop’s body would be a single if block testing a condition of the element, the test is placed in the where clause of the for statement instead.
 
 __Not Preferred__
